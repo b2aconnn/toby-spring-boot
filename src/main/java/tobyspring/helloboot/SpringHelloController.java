@@ -3,25 +3,35 @@ package tobyspring.helloboot;
 import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
 import org.springframework.boot.web.server.WebServer;
 import org.springframework.boot.web.servlet.server.ServletWebServerFactory;
+import org.springframework.context.support.GenericApplicationContext;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
+import javax.print.attribute.standard.Media;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.swing.*;
 import java.io.IOException;
 
-public class FrontController {
-//    HelloController helloController = new HelloController();
-
+public class SpringHelloController {
     public void service() {
+        // Application Context (Spring Container)에 빈을 등록
+        /**
+         * Spring Container의 특징
+         * 1. 등록된 객체를 여러 번 생성하지 않고 하나만 생성 (Singleton)
+         * 2. Spring Container를 Singleton Register 라고도 부름
+         */
+        GenericApplicationContext applicationContext = new GenericApplicationContext();
+        applicationContext.registerBean(HelloController.class);
+        applicationContext.registerBean(SimpleHelloService.class);
+        applicationContext.refresh();
+
         ServletWebServerFactory serverFactory = new TomcatServletWebServerFactory();
-        // serverFactory.getWebServer() : Servlet Container(Tomcat)를 생성
         WebServer webServer = serverFactory.getWebServer(servletContext -> {
-            // Servlet Container에 Servlet 등록
             servletContext.addServlet("frontcontroller", new HttpServlet() {
                 @Override
                 protected void service(HttpServletRequest req, HttpServletResponse resp)
@@ -33,14 +43,11 @@ public class FrontController {
                             && req.getMethod().equals(HttpMethod.GET.name())) {
                         String name = req.getParameter("name");
 
-//                        String ret = helloController.hello(name);
-                        String ret = "";
+                        HelloController helloController = applicationContext.getBean(HelloController.class);
+                        String ret = helloController.hello(name);
 
-                        resp.setStatus(HttpStatus.OK.value()); // http 응답 코드 (생략 가능 : Servlet에서 default로 200 code를 리턴)
-                        resp.setHeader(HttpHeaders.CONTENT_TYPE, MediaType.TEXT_PLAIN_VALUE); // http header
+                        resp.setContentType(MediaType.TEXT_PLAIN_VALUE);
                         resp.getWriter().println(ret); // http body
-                    } else if (req.getRequestURI().equals("/user")) {
-                        //
                     } else {
                         resp.setStatus(HttpStatus.NOT_FOUND.value());
                     }
