@@ -32,6 +32,7 @@ public class ConfigurationFrontController {
             protected void onRefresh() {
                 super.onRefresh();
 
+
                 ServletWebServerFactory serverFactory = new TomcatServletWebServerFactory();
                 WebServer webServer = serverFactory.getWebServer(servletContext -> {
                     servletContext.addServlet("dispatcherServlet",
