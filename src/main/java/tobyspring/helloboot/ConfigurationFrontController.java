@@ -31,7 +31,6 @@ public class ConfigurationFrontController {
             @Override
             protected void onRefresh() {
                 super.onRefresh();
-
                 
                 ServletWebServerFactory serverFactory = new TomcatServletWebServerFactory();
                 WebServer webServer = serverFactory.getWebServer(servletContext -> {
