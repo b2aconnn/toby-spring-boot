@@ -3,10 +3,10 @@ package tobyspring.helloboot;
 import org.springframework.boot.SpringApplication;
 
 @MySpringBootAnnotation
-public class HellobootApplication {
+public class MyHellobootApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(HellobootApplication.class, args);
+		SpringApplication.run(MyHellobootApplication.class, args);
 
 //		HelloServlet helloServlet = new HelloServlet();
 //		helloServlet.service();
