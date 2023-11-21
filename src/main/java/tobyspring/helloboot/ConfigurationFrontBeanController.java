@@ -10,18 +10,8 @@ import org.springframework.web.context.support.AnnotationConfigWebApplicationCon
 import org.springframework.web.servlet.DispatcherServlet;
 
 @Configuration
-@ComponentScan
+//@ComponentScan
 public class ConfigurationFrontBeanController {
-    @Bean
-    public ServletWebServerFactory serverFactory() {
-        return new TomcatServletWebServerFactory();
-    }
-
-    @Bean
-    public DispatcherServlet dispatcherServlet() {
-        return new DispatcherServlet();
-    }
-
     public void service(Class<?> applicationClass) {
         AnnotationConfigWebApplicationContext applicationContext = new AnnotationConfigWebApplicationContext() {
             @Override

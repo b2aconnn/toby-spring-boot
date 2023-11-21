@@ -14,7 +14,7 @@ import org.springframework.web.servlet.DispatcherServlet;
 // 해당 클래스가 구성 정보라는 것을 알려주기 위한 선언
 @Configuration
 // 해당 클래스가 있는 패키지부터 시작해서 하위 패키지까지 탐색을 해 @Component가 붙은 클래스들을 모두 Bean으로 등록을 해줌
-@ComponentScan
+//@ComponentScan
 public class ConfigurationFrontController {
     // 팩토리 메소드의 return한 객체를 Spring Container에 Bean으로 등록
 //    @Bean
