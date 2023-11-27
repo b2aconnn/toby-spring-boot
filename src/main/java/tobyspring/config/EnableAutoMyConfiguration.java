@@ -13,3 +13,4 @@ import java.lang.annotation.Target;
 @Import(MyAutoConfigImportSelector.class)
 public @interface EnableAutoMyConfiguration {
 }
+
