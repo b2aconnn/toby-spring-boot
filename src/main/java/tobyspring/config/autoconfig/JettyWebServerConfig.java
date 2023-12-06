@@ -1,6 +1,6 @@
 package tobyspring.config.autoconfig;
 
-import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
+import org.springframework.boot.web.embedded.jetty.JettyServletWebServerFactory;
 import org.springframework.boot.web.servlet.server.ServletWebServerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Condition;
@@ -10,14 +10,16 @@ import org.springframework.core.type.AnnotatedTypeMetadata;
 import tobyspring.config.MyAutoConfiguration;
 
 @MyAutoConfiguration
-@Conditional(TomcatWebServerConfig.TomcatCondition.class)
-public class TomcatWebServerConfig {
-    @Bean("tomcatWebServerFactory")
+// @Condition : 해당 Configuration 클래스에 있는 Bean들을 등록할 지 말 지 설정
+// Condition Interface를 구현한 클래스를 엘리먼트로 등록해야함
+@Conditional(JettyWebServerConfig.JettyCondition.class)
+public class JettyWebServerConfig {
+    @Bean("jettyWebServerFactory")
     public ServletWebServerFactory serverFactory() {
-        return new TomcatServletWebServerFactory();
+        return new JettyServletWebServerFactory();
     }
 
-    static class TomcatCondition implements Condition {
+    static class JettyCondition implements Condition {
         @Override
         public boolean matches(ConditionContext context, AnnotatedTypeMetadata metadata) {
             return false;
