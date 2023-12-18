@@ -9,7 +9,7 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
-// @Condition : 해당 Configuration 클래스에 있는 Bean들을 등록할 지 말 지 설정
+// @Conditional : 해당 Configuration 클래스에 있는 Bean들을 등록할 지 말 지 설정
 // Condition Interface를 구현한 클래스를 엘리먼트로 등록해야함
 @Conditional(MyOnClassCondition.class)
 public @interface ConditionalMyClass {
