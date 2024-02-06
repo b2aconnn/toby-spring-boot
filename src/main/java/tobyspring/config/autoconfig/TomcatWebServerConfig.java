@@ -2,20 +2,29 @@ package tobyspring.config.autoconfig;
 
 import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
 import org.springframework.boot.web.servlet.server.ServletWebServerFactory;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Condition;
-import org.springframework.context.annotation.ConditionContext;
-import org.springframework.context.annotation.Conditional;
+import org.springframework.context.annotation.*;
 import org.springframework.core.type.AnnotatedTypeMetadata;
 import org.springframework.util.ClassUtils;
+import tobyspring.config.EnableMyConfigurationProperties;
 import tobyspring.config.MyAutoConfiguration;
 
 @MyAutoConfiguration
 @Conditional(TomcatWebServerConfig.TomcatCondition.class)
+@EnableMyConfigurationProperties(ServerProperties.class)
+//@Import(ServerProperties.class)
 public class TomcatWebServerConfig {
+//    @Bean("tomcatWebServerFactory")
+//    public ServletWebServerFactory servletWebServerFactory() {
+//        return new TomcatServletWebServerFactory();
+//    }
+
+    // 별도의 serverProperties 클래스로 분리 후 외부 설정
     @Bean("tomcatWebServerFactory")
-    public ServletWebServerFactory serverFactory() {
-        return new TomcatServletWebServerFactory();
+    public ServletWebServerFactory servletWebServerFactory(ServerProperties serverProperties) {
+        TomcatServletWebServerFactory factory = new TomcatServletWebServerFactory();
+        factory.setContextPath(serverProperties.getContextPath());
+        factory.setPort(serverProperties.getPort());
+        return factory;
     }
 
     static class TomcatCondition implements Condition {
